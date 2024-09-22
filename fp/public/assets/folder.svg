@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:realworld="http://www.rw-designer.com/export-svg" width="36px" height="37px">
+  <g inkscape:groupmode="layer" inkscape:label="layer 0">
+    <rect fill="#00afff" height="9.86242" rx="6.92987" ry="6.92987" transform="translate(7.59308,10.6912) rotate(0.115584) translate(-7.59308,-10.6912)" width="16.2316" x="-0.5227" y="5.75999" />
+    <rect fill="#00c9ff" height="18.6176" rx="0.989977" ry="0.989977" transform="translate(17.8083,18.6538) rotate(0.201281) translate(-17.8083,-18.6538)" width="36.8464" x="-0.614901" y="9.34498" />
+    <rect fill="#00afff" height="3.15686" rx="0.989977" ry="0.989977" transform="translate(18.1303,10.294) rotate(0.111072) translate(-18.1303,-10.294)" width="36.65" x="-0.1947" y="8.71557" />
+    <text dominant-baseline="text-before-edge" fill="#ffffff" font-family="PhrasticMedium" font-size="14.8497" font-weight="bold" text-anchor="start" x="2.56011" y="12.7797">C:</text>
+    <text dominant-baseline="text-before-edge" fill="#ffffff" font-family="BN Machine" font-size="15.8398" font-weight="bold" text-anchor="start" x="16.5622" y="9.65184">\</text>
+    <text dominant-baseline="text-before-edge" fill="#ffffff" font-family="BN Machine" font-size="15.8398" font-weight="bold" text-anchor="start" x="23.9372" y="10.6518">\</text>
+  </g>
+</svg>

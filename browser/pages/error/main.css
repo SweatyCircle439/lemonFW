@@ -1,0 +1,21 @@
+.popup {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height:80%;
+    width: 50%;
+    & div {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        text-align: center;
+    }
+}
+img {
+    position: absolute;
+    top: 50%;
+    right: -25;
+    transform: translateY(-50%);
+    height:80%
+}

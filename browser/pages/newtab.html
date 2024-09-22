@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="index.js"></script>
+</head>
+<body>
+    <form action="">
+    <fieldset class="theme-selector">
+            <legend class="visualy-hidden">color scheme options</legend>
+            <input type="radio" name="theme" class="melon" id="melon" value="light" checked><label for="melon" class="visualy-hidden">melon</label>
+            <input type="radio" name="theme" class="darkmelon" id="darkmelon" value="dark" checked><label for="darkmelon" class="visualy-hidden" checked>darkmelon</label>
+            <input type="radio" name="theme" class="vulcano" id="vulcano" value="vulcano"><label for="vulcano" class="visualy-hidden">vulcano</label>
+            <input type="radio" name="theme" class="spell" id="spell" value="spell"><label for="spell" class="visualy-hidden">spell</label>
+            <input type="radio" name="theme" class="darkbanana" id="darkbanana" value="dark_banana"><label for="darkbanana" class="visualy-hidden">dark banana</label>
+        </fieldset>
+    </form>
+    <div class="bottom-right" onclick="ftpqr()">
+    </div>
+</body>
+</html>
+<style>
+    :root {
+    --body-bg: #252422;
+    --font-color: #FFFCF2;
+    --rim-color: #EB5E28;
+    --card-bg: --body-bg;
+    --heading-color: #000000;
+    --theme-selector-bg: #373737;
+}
+body {
+    background: var(--body-bg);
+    color: var(--font-color);
+    margin: 0;
+}
+fieldset.roundsquare{
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    background: var(--card-bg);
+    width: 300px;
+    min-height: 250px;
+    border-radius: 25px;
+    border: none;
+    border-top: 30px solid var(--rim-color);
+    outline: 2px solid var(--rim-color);
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: large;
+}
+fieldset.roundsquare legend{
+    background-color: var(--rim-color);
+    color: var(--heading-color);
+    height: 29.75px;
+    font-weight: bold;
+    font-size: 25px;
+    margin-bottom: -1px;
+    padding-right: 10px;
+    margin: auto;
+    overflow: hidden;
+}
+.containerholder fieldset{
+    float: left;
+    margin-left: 1rem;
+    margin-top: 1rem;
+}
+.padding {
+    padding: 1rem;
+}
+.visualy-hidden {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+.theme-selector {
+    border: 0;
+    display: flex;
+    gap: 2rem;
+    background: var(--theme-selector-bg);
+    width: -moz-fit-content;
+    width: fit-content;
+    padding: 1rem 3rem;
+    border-radius: 0 0 1rem 1rem;
+    margin-inline: auto;
+}
+.theme-selector input[type="radio"] {
+    appearance: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    background-size: 100% 100%;
+}
+.theme-selector input[type="radio"]:checked {
+    border: 3px solid var(--rim-color);
+}
+.theme-selector input[type="radio"].vulcano{
+    background-image: url(assets/ct/vulcano.png);
+}
+.theme-selector input[type="radio"].melon{
+    background-image: url(assets/ct/melon.png);
+}
+.theme-selector input[type="radio"].spell{
+    background-image: url(assets/ct/spell.png);
+}
+.theme-selector input[type="radio"].darkbanana{
+    background-image: url(assets/ct/darkbanana.png);
+}
+.theme-selector input[type="radio"].darkmelon{
+    background-image: url(assets/ct/darkmelon.png);
+}
+img {
+    width: 33%;
+    aspect-ratio: 1 / 1;
+    position:absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.bottom-right {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    z-index: 100;
+    cursor: pointer;
+    width: 150px;
+    aspect-ratio: 1/1;
+    background-image: url(assets/icons/transferfileslmndark.svg);
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+</style>
+<script>
+
+    const matches = document.querySelectorAll('.theme-selector input[type="radio"]');
+    for (match in matches) {
+        matches[match].onchange = function() {
+            lmn.setBrowserStyleProperty("color-scheme", this.value);
+        }
+    }
+    function ftpqr() {
+        lmn.startFPhost();
+        const image = document.createElement("img");
+        image.src = `http://qserver.benedictus.nu/api/chart/qr?size=100x100&&text=${encodeURI(`http://${lmn.getIP()}:130`)}&&type=image`;
+        document.body.appendChild(image);
+    }
+</script>

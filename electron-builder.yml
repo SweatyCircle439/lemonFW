@@ -1,0 +1,65 @@
+appId: nu.benedictus.qserver.lemon.lemonfw
+productName: Lemon FrameWork
+linux:
+  icon: browser/assets/logo/logo.png
+  executableName: lemonFW
+  category: Network;WebBrowser;
+  maintainer: qserver
+  publish:
+  target:
+    - target: AppImage
+      arch:
+        - x64
+        - arm64
+    - target: deb
+      arch:
+        - x64
+        - arm64
+    - target: rpm
+      arch:
+        - x64
+        - arm64
+mac:
+  category: public.app-category.productivity
+  icon: browser/assets/logo/logo.png
+  publish:
+  target:
+    - target: zip
+      arch:
+        - x64
+win:
+  icon: browser/assets/logo/logo.png
+  legalTrademarks: Copyright © qserver | Licensed as free software (Apache 2.0)
+  publish:
+  target:
+    - target: nsis
+      arch:
+        - x64
+    - target: portable
+      arch:
+        - x64
+nsis:
+  differentialPackage: false
+  oneClick: false
+  license: LICENSE
+  createDesktopShortcut: false
+  allowToChangeInstallationDirectory: true
+
+fileAssociations:
+  - name: HyperText Markup File
+    ext: html
+  - name: Extensible HyperText Markup File
+    ext: xhtml
+  - name: HyperText Markup File
+    ext: htm
+  - name: HyperText Markup File
+    ext: shtml
+  - name: Extensible HyperText Markup File
+    ext: xht
+protocols:
+  - name: HyperText Transfer Protocol
+    schemes:
+      - ftp
+      - http
+      - https
+copyright: Copyright © qserver | Licensed as free software (Apache 2.0)

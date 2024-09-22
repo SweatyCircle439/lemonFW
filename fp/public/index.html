@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lemon file transfer</title>
+</head>
+<body>
+    <form
+        action="/upload"
+        method="post"
+        id="fileTransferForm"
+        enctype="multipart/form-data"
+    >
+        <label for="upload"><img src="assets/folder.svg"></label>
+        <input type="file" name="upload" id="upload">
+    </form>
+</body>
+</html>
+<style>
+    body {
+        background-color: #1e1e1e;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+    }
+    input {
+        display: none;
+    }
+    img {
+        width: min(50vw, 50vh);
+    }
+</style>
+<script>
+    const form = document.getElementById('fileTransferForm');
+    const input = document.getElementById('upload');
+    
+    input.addEventListener('change', function(e) {
+        form.submit();
+    });
+</script>

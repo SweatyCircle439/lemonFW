@@ -1,0 +1,150 @@
+:root {
+    /* light theme */
+    --theme-titlebar-background-light: #35663F;
+    --theme-titlebar-text-color-light: white;
+    --theme-titlebar-hover-color-light: #7a998a;
+    --theme-main-tabinfo-background-light: #F2E9D0;
+    --theme-main-urlbar-background-light: #EF4731;
+    --theme-main-text-color-light: white;
+    --theme-main-button-color-light: #EF4731;
+    --theme-main-button-hover-color-light: #eee2c0;
+    /* dark theme */
+    --theme-titlebar-background-dark: #090b0a;
+    --theme-titlebar-text-color-dark: white;
+    --theme-titlebar-hover-color-dark: #3f4f47;
+    --theme-main-tabinfo-background-dark: #2b3731;
+    --theme-main-urlbar-background-dark: #3f4f47;
+    --theme-main-text-color-dark: white;
+    --theme-main-button-color-dark: white;
+    --theme-main-button-hover-color-dark: #3f4f47;
+    /* vulcano theme */
+    --theme-titlebar-background-vulcano: #EB5E28;
+    --theme-titlebar-text-color-vulcano: #FFFCF2;
+    --theme-main-tabinfo-background-vulcano: #252422;
+    --theme-main-urlbar-background-vulcano: #EB5E28;
+    --theme-main-text-color-vulcano: #FFFCF2;
+    --theme-main-button-color-vulcano: #FFFCF2;
+    --theme-main-button-hover-color-vulcano: #EB5E28;
+    /* spell theme */
+    --theme-titlebar-background-spell: #6F2DBD;
+    --theme-titlebar-text-color-spell: #FFFCF2;
+    --theme-main-tabinfo-background-spell: #1e1e1e;
+    --theme-main-urlbar-background-spell: #6F2DBD;
+    --theme-main-text-color-spell: white;
+    --theme-main-button-color-spell: #A663CC;
+    --theme-main-button-hover-color-spell: #464646;
+    /* dark banana theme */
+    --theme-titlebar-background-darkbanana: #E4E6C3;
+    --theme-titlebar-text-color-darkbanana: #222725;
+    --theme-main-tabinfo-background-darkbanana: #121113;
+    --theme-main-urlbar-background-darkbanana: #E4E6C3;
+    --theme-main-text-color-darkbanana: #222725;
+    --theme-main-button-color-darkbanana: #F7F7F2;
+    --theme-main-button-hover-color-darkbanana: #464646;
+}
+@font-face {
+    font-family: "lemonTopBar";
+    src:
+    local("lemonTopBar"),
+    url("assets/fonts/lemonTopBar.otf") format("opentype")
+}
+* {
+    padding: 0;
+    margin: 0;
+}
+body, html {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    font-size: 14px;
+    flex-direction: column;
+    font-family: monospace;
+}
+.main {
+    background: var(--main-tabinfo-background);
+    background-size: cover;
+    background-position: center center;
+    width: 100%;
+    color: var(--main-text-color);
+}
+.tabinfo {
+    padding-top: 10px;
+    background: var(--main-tabinfo-background);
+    background-size: cover;
+    background-position: center center;
+    display: flex;
+    gap: 12px;
+    padding: 8px;
+}
+.urlbar {
+    border: none !important;
+    outline: none !important;
+    padding: 3px 20px;
+    width: 75%;
+    height: 25px;
+    font: inherit;
+    font-weight: bold;
+    border-radius: 5px;
+    background: var(--main-urlbar-background);
+    background-size: cover;
+    background-position: center center;
+    margin: auto;
+    color:var(--main-text-color);
+}
+.tabinfo button {
+    display: flex;
+    border: none;
+    background-color: transparent;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding: 6px;
+    border-radius: 3px;
+}
+
+.tabinfo button svg {
+    margin: auto;
+    width: 16px;
+    fill: var(--main-button-color);
+    background-size: cover;
+    background-position: center center;
+    background-size: cover;
+    background-position: center center;
+}
+.tabinfo button:hover:not(:disabled) {
+    background-color: var(--main-button-hover-color);
+    background-size: cover;
+    background-position: center center;
+}
+.tabinfo button:disabled svg {
+    fill: var(--main-button-hover-color);
+    background-size: cover;
+    background-position: center center;
+}
+#title-bar {
+    display: flex;
+    justify-content: space-between;
+    background: var(--titlebar-background);
+    align-items: center;
+    color: var(--titlebar-text-color);
+    height: 40px;
+    padding: 0 16px;
+    gap: 10px;
+    user-select: none;
+    -webkit-app-region: drag;
+}
+#title-bar button {
+    font-family: lemonTopBar;
+    text-align: center middle;
+    height: 40px;
+    font-size: 32px;
+    padding-top: 7px;
+    line-height: 40px;
+    background: none;
+    width: 32px;
+    border: none;
+    color: var(--titlebar-text-color);
+    -webkit-app-region: no-drag;
+}
+#title-bar button:hover {
+    color: var(--titlebar-hover-color);
+}
