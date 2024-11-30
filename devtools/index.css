@@ -1,0 +1,103 @@
+:root {
+    --main-bg-color: #1e1e1e;
+    --main-highlight-color: #2e2e2e;
+    --secondary-highlight-color: #3e3e3e;
+    --main-text-color: #ffffff;
+}
+
+::-webkit-scrollbar {
+    height: 5px;
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--main-bg-color);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3), inset 0 -1px 2px rgba(255, 255, 255, 0.2);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--main-highlight-color);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-highlight-color);
+}
+@font-face {
+    font-family: main;
+    src: url(font.ttf);
+}
+html,
+body {
+    background-color: var(--main-bg-color);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+#tabs {
+    width: 100%;
+    height: 30px;
+    background-color: var(--main-bg-color);
+    gap: 5px;
+    display: flex;
+    overflow-x: auto;
+    & button {
+        outline: none;
+        background-color: transparent;
+        color: var(--main-text-color);
+        cursor: pointer;
+        text-align: center;
+        margin-right: 10px;
+        padding: 10px;
+        font-size: 16px;
+        height: 100%;
+        line-height: 0px;
+        border: none;
+        transition: all 0.5s;
+        &:hover,&.active {
+            background-color: var(--main-highlight-color);
+            -webkit-box-shadow: 0px 0px 31px 10px var(--main-highlight-color);
+            -moz-box-shadow: 0px 0px 31px 10px var(--main-highlight-color);
+            box-shadow: 0px 0px 31px 10px var(--main-highlight-color);
+            transform: scaleX(1.2);
+        }
+    }
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    flex: 1;
+    overflow: hidden;
+}
+#consolecommand {
+    height: 40vh;
+    width: 100%;
+}
+* {
+    font-family: main !important;
+    margin: 0;
+    padding: 0;
+}
+.codicon:before {
+    font: normal normal normal 16px / 1 codicon !important;
+}
+#resize-bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 10px;
+    height: 100vh;
+    z-index: 1234567890;
+    background-color: transparent;
+    transition: 0.2s all;
+    &:hover {
+        background-color: var(--secondary-highlight-color);
+    }
+}
+#consoleoutput {
+    flex: 1;
+}

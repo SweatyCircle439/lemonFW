@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="monaco-editor/vs/loader.js"></script>
+        <link rel="stylesheet" href="index.css">
+        <script src="index.js"></script>
+    </head>
+    <body>
+        <div id="resize-bar" draggable></div>
+        <div id="tabs" onWheel= "this.scrollLeft+=event.deltaY">
+            <button data-open="codecontainer" class="active">code</button>
+            <button data-open="codecontainer">styles</button>
+            <button data-open="consolecontainer">console</button>
+            <button>network</button>
+        </div>
+        <div class="container" id="codecontainer"></div>
+        <div class="container" id="consolecontainer">
+            <div id="consoleoutput"></div>
+            <div id="consolecommand"></div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lemon installer</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="jszip.min.js"></script>
+    <script src="index.js"></script>
+</head>
+<body>
+    <div class="page currentpage" id="start">
+        <div class="topbar">
+            <div>
+                <div class="imgcontainer">
+                    <img src="assets/logo/logo.png" alt="">
+                </div>
+                <p>uninstall lemon</p>
+                <p class="grayed">start</p>
+            </div>
+            <div class="topbarbuttons">
+                <button onclick="window.minimize();">-</button>
+                <button onclick="window.close();">X</button>
+            </div>
+        </div>
+        <div class="pagecontents">
+            <img src="assets/logo/logo.png">
+            <div class="nonimagecontents">
+                <h1>
+                    uninstall lemon
+                </h1>
+                <p>
+                    uninstalling lemon will remove all of its files and settings. this process cannot be undone. some files like cookies and mfp transferred files will not be removed.
+                </p>
+                <div class="prevnextbuttons">
+                    <button onclick="window.close();">cancel</button>
+                    <button onclick="changePage('selectversion');">next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page" id="selectversion">
+        <div class="topbar">
+            <div>
+                <div class="imgcontainer">
+                    <img src="assets/logo/logo.png" alt="">
+                </div>
+                <p>uninstall lemon</p>
+                <p class="grayed">confirm</p>
+            </div>
+            <div class="topbarbuttons">
+                <button onclick="window.minimize();">-</button>
+                <button onclick="window.close();">X</button>
+            </div>
+        </div>
+        <div class="pagecontents">
+            <div class="nonimagecontents">
+                <h1>uninstall lemon</h1>
+                <h3 style = "color: red;">you are about to perform a inreversible operation</h3>
+                <p>
+                    uninstalling lemon will remove all of its files and settings. this process cannot be undone. some files like cookies and mfp transferred files will not be removed.
+                </p>
+                <h3>are you sure you want to uninstall lemon</h3>
+                <div class="prevnextbuttons">
+                    <button onclick="window.close();">cancel</button>
+                    <button onclick="changePage('install');">confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page" id="install">
+        <div class="topbar">
+            <div>
+                <div class="imgcontainer">
+                    <img src="assets/logo/logo.png" alt="">
+                </div>
+                <p>uninstall lemon</p>
+                <p class="grayed">uninstalling</p>
+            </div>
+            <div class="topbarbuttons">
+                <button onclick="window.minimize();">-</button>
+            </div>
+        </div>
+        <div class="pagecontents">
+            <div class="nonimagecontents">
+                <h1>uninstalling</h1>
+                <p id="installlog"></p>
+                <p class="grayed">
+                    sometimes the installer randomly exits after finishing the installation, this is normal behaviour. if this happens, just check the install status by looking for lemon in your applications
+                </p>
+                <div class="loadingcircle">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                        <!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                        <path d="M304 48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zm0 416a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM48 304a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm464-48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM142.9 437A48 48 0 1 0 75 369.1 48 48 0 1 0 142.9 437zm0-294.2A48 48 0 1 0 75 75a48 48 0 1 0 67.9 67.9zM369.1 437A48 48 0 1 0 437 369.1 48 48 0 1 0 369.1 437z"/>
+                    </svg>
+                </div>
+                <div class="prevnextbuttons">
+                    <button onclick="changePage('selectversion');" id="selectversionback">back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page" id="finished">
+        <div class="topbar">
+            <div>
+                <div class="imgcontainer">
+                    <img src="assets/logo/logo.png" alt="">
+                </div>
+                <p>uninstall lemon</p>
+                <p class="grayed">finished</p>
+            </div>
+            <div class="topbarbuttons">
+                <button onclick="window.minimize();">-</button>
+                <button onclick="window.close();">X</button>
+            </div>
+        </div>
+        <div class="pagecontents">
+            <div class="nonimagecontents">
+                <h1>finished</h1>
+                <p>
+                    you have successfully uninstalled lemon on your device
+                </p>
+                <div class="prevnextbuttons">
+                    <button onclick="window.close()">finish</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page" id="failed">
+        <div class="topbar">
+            <div>
+                <div class="imgcontainer">
+                    <img src="assets/logo/logo.png" alt="">
+                </div>
+                <p>uninstall lemon</p>
+                <p class="grayed">failed</p>
+            </div>
+            <div class="topbarbuttons">
+                <button onclick="window.minimize();">-</button>
+                <button onclick="window.close();">X</button>
+            </div>
+        </div>
+        <div class="pagecontents">
+            <div class="nonimagecontents">
+                <h1>install failed</h1>
+                <p>
+                    sorry, but the install failed on your device.
+                </p>
+                <p class="grayed" id="exitcode"></p>
+                <div class="prevnextbuttons">
+                    <button onclick="window.close();">exit</button>
+                    <button onclick="changePage('selectversion');">retry</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

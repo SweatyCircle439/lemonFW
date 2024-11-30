@@ -6,6 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
     <script src="index.js"></script>
+    <link rel="icon" href="assets/icons/logo.ico">
 </head>
 <body>
     <form action="">
@@ -24,7 +25,7 @@
 </html>
 <style>
     :root {
-    --body-bg: #252422;
+    --body-bg: url(../assets/lemonjc.png);
     --font-color: #FFFCF2;
     --rim-color: #EB5E28;
     --card-bg: --body-bg;
@@ -33,6 +34,8 @@
 }
 body {
     background: var(--body-bg);
+    background-size: cover;
+
     color: var(--font-color);
     margin: 0;
 }
@@ -83,7 +86,8 @@ fieldset.roundsquare legend{
     border: 0;
     display: flex;
     gap: 2rem;
-    background: var(--theme-selector-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid white;
     width: -moz-fit-content;
     width: fit-content;
     padding: 1rem 3rem;
@@ -149,4 +153,13 @@ img {
         image.src = `http://qserver.benedictus.nu/api/chart/qr?size=100x100&&text=${encodeURI(`http://${lmn.getIP()}:130`)}&&type=image`;
         document.body.appendChild(image);
     }
+    lmn.lmntab.InnerHTML("<p>n<img class=\"tab-icon\" data-replace=\"src\" data-replaceWith=\"icon\">w tab</p>");
+    lmn.lmntab.css("fontSize", "40px");
+    lmn.lmntab.css("fontWeight", "bold");
+    lmn.lmntab.css("justifyContent", "center");
+    lmn.lmntab.css("background", "url(assets/lemonjc.png)");
+    lmn.lmntab.css("backgroundRepeat", "no-repeat");
+    lmn.lmntab.css("backgroundSize", "200%");
+    lmn.lmntab.css("backgroundPosition", "50% 50%");
+    lmn.lmntab.css("color", "white");
 </script>

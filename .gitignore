@@ -1,4 +1,10 @@
-/.hintrc
-/.prettierrc
-/dist
-/node_modules
+.hintrc
+.prettierrc
+dist
+node_modules
+installer/node_modules
+installer/output
+uninstaller/node_modules
+uninstaller/dist
+installer/installer
+installer/pages/packededitions/*

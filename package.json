@@ -3,21 +3,36 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "bin": "index.js",
   "scripts": {
     "test": "electron .",
-    "build": "electron-builder"
+    "build": "node createlmnfile.js"
   },
   "keywords": [],
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
+    "@electron/remote": "^2.1.2",
+    "electron-packager": "^17.1.2",
     "express": "^4.21.0",
+    "fs-extra": "^11.2.0",
     "ip": "^2.0.1",
+    "jszip": "^3.10.1",
+    "monaco-editor": "^0.52.0",
     "multer": "^1.4.5-lts.1",
-    "node-fetch": "^2.7.0"
+    "node-fetch": "2.7.0",
+    "shelljs": "^0.8.5"
   },
   "devDependencies": {
+    "@types/node-fetch": "^2.6.11",
     "electron": "^31.2.0",
     "electron-builder": "^25.0.5"
+  },
+  "pkg": {
+    "targets": [
+      "node14-linux-x64",
+      "node14-macos-x64",
+      "node14-win-x64"
+    ]
   }
 }

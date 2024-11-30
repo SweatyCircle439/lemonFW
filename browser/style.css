@@ -1,4 +1,6 @@
 :root {
+    /* common values */
+    --tab-icon-size: 30px;
     /* light theme */
     --theme-titlebar-background-light: #35663F;
     --theme-titlebar-text-color-light: white;
@@ -8,6 +10,8 @@
     --theme-main-text-color-light: white;
     --theme-main-button-color-light: #EF4731;
     --theme-main-button-hover-color-light: #eee2c0;
+    --theme-main-base-tab-background-light: #7a998a;
+    --theme-main-base-tab-hover-background-light: #EF4731;
     /* dark theme */
     --theme-titlebar-background-dark: #090b0a;
     --theme-titlebar-text-color-dark: white;
@@ -17,30 +21,41 @@
     --theme-main-text-color-dark: white;
     --theme-main-button-color-dark: white;
     --theme-main-button-hover-color-dark: #3f4f47;
+    --theme-main-base-tab-background-dark: #2e2e2e;
+    --theme-main-base-tab-hover-background-dark: #616161;
     /* vulcano theme */
     --theme-titlebar-background-vulcano: #EB5E28;
     --theme-titlebar-text-color-vulcano: #FFFCF2;
+    --theme-titlebar-hover-color-vulcano: #fee69a;
     --theme-main-tabinfo-background-vulcano: #252422;
     --theme-main-urlbar-background-vulcano: #EB5E28;
     --theme-main-text-color-vulcano: #FFFCF2;
     --theme-main-button-color-vulcano: #FFFCF2;
     --theme-main-button-hover-color-vulcano: #EB5E28;
+    --theme-main-base-tab-background-vulcano: #833313;
+    --theme-main-base-tab-hover-background-vulcano: #252422;
     /* spell theme */
     --theme-titlebar-background-spell: #6F2DBD;
     --theme-titlebar-text-color-spell: #FFFCF2;
+    --theme-titlebar-hover-color-spell: #3a007c;
     --theme-main-tabinfo-background-spell: #1e1e1e;
     --theme-main-urlbar-background-spell: #6F2DBD;
     --theme-main-text-color-spell: white;
     --theme-main-button-color-spell: #A663CC;
     --theme-main-button-hover-color-spell: #464646;
+    --theme-main-base-tab-background-spell: #3a007c;
+    --theme-main-base-tab-hover-background-spell: #A663CC;
     /* dark banana theme */
     --theme-titlebar-background-darkbanana: #E4E6C3;
     --theme-titlebar-text-color-darkbanana: #222725;
+    --theme-titlebar-hover-color-darkbanana: #085a3b;
     --theme-main-tabinfo-background-darkbanana: #121113;
     --theme-main-urlbar-background-darkbanana: #E4E6C3;
     --theme-main-text-color-darkbanana: #222725;
     --theme-main-button-color-darkbanana: #F7F7F2;
     --theme-main-button-hover-color-darkbanana: #464646;
+    --theme-main-base-tab-background-darkbanana: #fed880;
+    --theme-main-base-tab-hover-background-darkbanana: rgb(254, 180, 128);
 }
 @font-face {
     font-family: "lemonTopBar";
@@ -48,13 +63,27 @@
     local("lemonTopBar"),
     url("assets/fonts/lemonTopBar.otf") format("opentype")
 }
+::-webkit-scrollbar {
+    height: 5px;
+    width: 5px;
+}
+  
+::-webkit-scrollbar-track {
+    background: var(--main-urlbar-background); 
+}
+::-webkit-scrollbar-thumb {
+    background: var(--main-button-color); 
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--main-button-hover-color); 
+}
 * {
     padding: 0;
     margin: 0;
 }
 body, html {
     width: 100%;
-    height: 100%;
+    height: 87px;
     display: flex;
     font-size: 14px;
     flex-direction: column;
@@ -75,6 +104,7 @@ body, html {
     display: flex;
     gap: 12px;
     padding: 8px;
+    height: 50%;
 }
 .urlbar {
     border: none !important;
@@ -126,25 +156,156 @@ body, html {
     background: var(--titlebar-background);
     align-items: center;
     color: var(--titlebar-text-color);
-    height: 40px;
-    padding: 0 16px;
+    height: 50%;
+    padding-right: 16px;
     gap: 10px;
     user-select: none;
     -webkit-app-region: drag;
+    position: relative;
+    width: calc(100% - 16px);
 }
-#title-bar button {
+
+#title-bar .buttons {
+    display: flex;
+    gap: 10px;
+    flex: 0 0 auto;
+}
+#title-bar .buttons button {
     font-family: lemonTopBar;
     text-align: center middle;
     height: 40px;
     font-size: 32px;
-    padding-top: 7px;
     line-height: 40px;
     background: none;
     width: 32px;
     border: none;
     color: var(--titlebar-text-color);
     -webkit-app-region: no-drag;
+    margin-top: 50%;
+    transform: translateY(-50%);
+}
+#title-bar .tabs {
+    position: relative;
+    flex: 1;
+    display: flex;
+    height: 100%;
+    overflow: hidden;
+}
+#title-bar .tabs #tabs {
+    gap: 3px;
+    flex: 1;
+    height: 100%;
+    display: flex;
+    padding: 0px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 100%;
+}
+.tab {
+    gap: 10px;
+    padding: 3px;
+    min-width: calc(var(--tab-icon-size));
+    overflow: hidden;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    -webkit-app-region: no-drag;
+    height: 100%;
+    max-width: 300px;
+    background: var(--main-base-tab-background);
+    /* clip-path: polygon(0% 15%, 6% 5%, 15% 0%, 85% 0%, 93% 4%, 100% 15%, 100% 85%, 100% 100%, 15% 100%, 0 100%); */
+    clip-path:ellipse(80% 100% at 50% 100%);
+    background-size: cover;
+    background-position: center center;
+    transition: clip-path 1s;
+    cursor: pointer;
+    position: relative;
+}
+.tab:hover {
+    background-color: var(--main-base-tab-hover-background);
+    /* clip-path: polygon(50% 0%, 85% 12%, 100% 43%, 100% 100%, 0 100%, 0 0); */
+    clip-path: ellipse(100% 120% at 50% 100%) !important;
+}
+.tab-close {
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+}
+.tab-icon {
+    height: var(--tab-icon-size);
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+#title-bar .tabs button{
+    flex: 1;
+    text-align: center middle;
+    height: 40px;
+    font-size: 32px;
+    line-height: 40px;
+    background: none;
+    width: 52px;
+    border: none;
+    color: var(--titlebar-text-color);
+    -webkit-app-region: no-drag;
+    position: absolute;
+    background: linear-gradient(to right, transparent 10px, var(--titlebar-background));
+    top: 50%;
+    right: 0px;
+    transform: translateY(-50%);
 }
 #title-bar button:hover {
     color: var(--titlebar-hover-color);
+}
+@property --rotation {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+@property --color {
+    syntax: "<color>";
+    initial-value: var(--titlebar-background);
+    inherits: false;
+}
+#update {
+    display: none;
+    position: relative;
+    isolation: isolate;
+    background: var(--main-urlbar-background);
+    display: flex;
+    border: none;
+    background-color: transparent;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding: 6px;
+    border-radius: 3px;
+    &.updating {
+        &::before {
+            content: "";
+            --rotation: 0deg;
+            --color: var(--main-urlbar-background);
+            position: absolute;
+            inset: -3px;
+            background: conic-gradient(from var(--rotation), var(--color) 20%, transparent 30%, transparent 180deg, var(--color) 20% 270deg, transparent 30%, transparent);
+            z-index: -10;
+            border-radius: inherit;
+            animation: updateactive 1s linear infinite;
+        }
+    }
+}
+@keyframes updateactive {
+    0% {
+        --rotation: 0deg;
+        --color: rgba(0, 0, 0, 0.3);
+    }
+    50% {
+        --rotation: 180deg;
+        --color: rgba(0, 0, 0, 0.5);
+    }
+    100% {
+        --rotation: 360deg;
+        --color: rgba(0, 0, 0, 0.3);
+    }
 }

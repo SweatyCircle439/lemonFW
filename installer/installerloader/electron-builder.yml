@@ -1,0 +1,47 @@
+appId: nu.benedictus.qserver.lemon.lemoninstaller
+productName: Lemon FrameWork
+asar: true
+linux:
+  icon: pages/assets/logo/logo.png
+  executableName: lemonInstaller
+  category: Network;WebBrowser;
+  maintainer: qserver
+  publish:
+  target:
+    - target: AppImage
+      arch:
+        - x64
+        - arm64
+    - target: deb
+      arch:
+        - x64
+        - arm64
+    - target: rpm
+      arch:
+        - x64
+        - arm64
+mac:
+  category: public.app-category.productivity
+  icon: pages/assets/logo/logo.png
+  publish:
+  target:
+    - target: zip
+      arch:
+        - x64
+win:
+  icon: pages/assets/logo/logo.png
+  legalTrademarks: Copyright © qserver | Licensed as free software (Apache 2.0)
+  publish:
+  target:
+    - target: portable
+      arch:
+        - x64
+nsis:
+  differentialPackage: false
+  oneClick: false
+  license: LICENSE
+  createDesktopShortcut: false
+  allowToChangeInstallationDirectory: true
+copyright: Copyright © qserver | Licensed as free software (Apache 2.0)
+asarUnpack: 
+  - pages/packededitions/*

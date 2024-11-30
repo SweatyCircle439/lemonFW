@@ -1,6 +1,8 @@
 const { ipcRenderer } = require('electron');
 const path = require('path');
 
+window.getTabs = () => ipcRenderer.invoke("getTabs");
+
 window.getBrowserName = () => ipcRenderer.invoke('getBrowserName');
 
 window.createTab = () => ipcRenderer.invoke('createTab');
@@ -41,6 +43,33 @@ ipcRenderer.on("setBrowserStyleProperty", (event, property, value) => {
     window.browserStylePropertyChangeListener(property, value);
 });
 
-ipcRenderer.on("resetBrowserStyle", (event) => {
+ipcRenderer.on("resetBrowserStyle", (_) => {
     window.browserStyleResetListener();
+});
+
+let stagedTabUpdates = [];
+
+window.updateTabsListener = (tabs) => {
+    stagedTabUpdates = tabs;
+};
+
+ipcRenderer.on("tabUpdate", (_, tabs) => {
+    window.updateTabsListener(tabs);
+});
+
+window.setUpdateTabsListener = (listener) => {
+    window.updateTabsListener = listener;
+    listener(stagedTabUpdates);
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("update").onclick = () => {
+        document.getElementById("update").classList.add("updating");
+        ipcRenderer.invoke("update");
+    };
+});
+
+window.addEventListener('keydown', (event) => {
+    console.log(event.key);
+    ipcRenderer.invoke("keydown", event.key);
 });

@@ -1,0 +1,165 @@
+@font-face {
+    font-family: "lemonTopBar";
+    src:
+    local("lemonTopBar"),
+    url("assets/fonts/lemonTopBar.otf") format("opentype")
+}
+@font-face {
+    font-family: "rokkitt";
+    src:
+    local("rokkitt"),
+    url("assets/fonts/Rokkitt/Rokkitt-VariableFont_wght.ttf") format("truetype")
+}
+@font-face {
+    font-family: "roboto slab";
+    src:
+    local("roboto slab"),
+    url("assets/fonts/Roboto_Slab/RobotoSlab-VariableFont_wght.ttf") format("truetype")
+}* {
+    margin: 0px;
+    padding: 0px;
+    font-family: 'roboto slab', serif;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
+}
+h1, h2, h3 {
+    font-family: 'rokkitt', serif;
+    font-weight: 900;
+}
+.page {
+    position: absolute;
+    inset: 0;
+    border-radius: 50px;
+    background-color: white;
+    display: none;
+    overflow: hidden;
+}
+.currentpage {
+    display: block;
+}
+.pagecontents {
+    padding: 20px;
+    display: flex;
+    position: relative;
+    align-items: center;
+    gap: 30px;
+    justify-content: space-around;
+    & .nonimagecontents {
+        display: flex;
+        gap: 20px;
+        flex-direction: column;
+        & .prevnextbuttons {
+            display: flex;
+            gap: 10px;
+            & button {
+                padding: 5px;
+                width: 50%;
+                background: none;
+                border: 1px solid black;
+                border-radius: 10px;
+                transition: background-color .1s linear;
+                &:hover {
+                    background-color: rgba(0, 0, 0, 0.185);
+                }
+            }
+        }
+    }
+    & img {
+        height: 70vh;
+    }
+    & .packedEditions {
+        display: flex;
+        gap: 20px;
+        justify-content: space-between;
+        padding: 20px;
+        & .edition {
+            width: 105px;
+            text-align: center;
+            padding: 5px;
+            border-radius: 10px;
+            transition: background-color border-color .1s linear;
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.185);
+            }
+            &:has(input:checked) {
+                background-color: rgba(114, 114, 114, 0.5);
+            }
+            & img {
+                width: 100px;
+                height: 100px;
+                object-fit: contain;
+            }
+            & input {
+                display: none;
+            }
+        }
+    }
+}
+.topbar {
+    -webkit-app-region: drag;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 50px;
+    padding-right: 50px;
+    height: 20px !important;
+    font-size: 18px;
+    line-height: 20px;
+    position: relative;
+    & .topbarbuttons {
+        & button {
+            -webkit-app-region: no-drag;
+            font-family: lemonTopBar;
+            font-size: xx-large;
+            background: none;
+            border: none;
+            height: inherit;
+            aspect-ratio: 1 / 1;
+            padding: 3px;
+        }
+    }
+    & * {
+        height: inherit !important;
+    }
+    & img {
+        top: 50%;
+        transform: translateY(-50%);
+        position: absolute;
+    }
+    & .imgcontainer {
+        height: inherit;
+        aspect-ratio: 1 / 1;
+        position: relative;
+    }
+    & div {
+        display: flex;
+        gap: 5px;
+        position: relative;
+    }
+}
+.grayed {
+    color: gray;
+}
+.loadingcircle {
+    animation: spin 3s linear infinite;
+    width: 100px;
+    aspect-ratio: 1 / 1;
+    display: none;
+    &.active {
+        display: inline-block;
+    }
+}
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+.license {
+    height: calc(80vh - 100px);
+    width: 100%;
+    overflow: scroll;
+}

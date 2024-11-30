@@ -1,0 +1,278 @@
+:root {
+    --background-color: #1e1e1ec8;
+    --full-background-color: #1e1e1e;
+    --accent-color: #35663F;
+    --bright-accent-color: lime;
+    --extra-bright-accent-color: white;
+    --text-color: white;
+    --svg-fill: var(--accent-color);
+    --hover-background-color: rgb(79, 79, 79);
+}
+@media (prefers-color-scheme: light) {
+    :root {
+        --background-color: #ffffffc8;
+        --full-background-color: rgb(223, 223, 223);
+        --accent-color: #EF4731;
+        --bright-accent-color: #ef9031;
+        --extra-bright-accent-color: rgb(255, 196, 0);
+        --text-color: black;
+        --svg-fill: var(--extra-bright-accent-color);
+        --hover-background-color: #ffffff;
+    }
+}
+@font-face {
+    font-family: "lemonTopBar";
+    src:
+    local("lemonTopBar"),
+    url("assets/fonts/lemonTopBar.otf") format("opentype")
+}
+@font-face {
+    font-family: "rokkitt";
+    src:
+    local("rokkitt"),
+    url("assets/fonts/Rokkitt/Rokkitt-VariableFont_wght.ttf") format("truetype")
+}
+@font-face {
+    font-family: "roboto slab";
+    src:
+    local("roboto slab"),
+    url("assets/fonts/Roboto_Slab/RobotoSlab-VariableFont_wght.ttf") format("truetype")
+}* {
+    margin: 0px;
+    padding: 0px;
+    font-family: 'roboto slab', serif;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
+    fill: var(--svg-fill);
+    color: var(--text-color);
+}
+h1, h2, h3 {
+    font-family: 'rokkitt', serif;
+    font-weight: 900;
+}
+.page {
+    position: absolute;
+    inset: 0;
+    border-radius: 50px;
+    background-color: var(--background-color);
+    display: none;
+    overflow: hidden;
+}
+.currentpage {
+    display: block;
+}
+@property --rotation {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+@property --color {
+    syntax: "<color>";
+    initial-value: var(--extra-bright-accent-color);
+    inherits: false;
+}
+.pagecontents {
+    padding: 20px;
+    display: flex;
+    position: relative;
+    align-items: center;
+    gap: 30px;
+    height: calc(100% - 75px);
+    justify-content: space-around;
+    & .nonimagecontents {
+        display: flex;
+        gap: 20px;
+        flex-direction: column;
+        & .prevnextbuttons {
+            display: flex;
+            gap: 10px;
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 100px);
+            justify-content: space-between;
+            isolation: isolate;
+            & button {
+                padding: 5px;
+                background: none;
+                border: none;
+                border-radius: 10px;
+                transition: background-color .1s linear;
+                position: relative;
+                background-color: var(--full-background-color);
+                &:before {
+                    content: "";
+                    --rotation: 0deg;
+                    --color: var(--extra-bright-accent-color);
+                    position: absolute;
+                    inset: -3px;
+                    background: conic-gradient(from var(--rotation), var(--color) 20%, transparent 30%, transparent 180deg, var(--color) 20% 270deg, transparent 30%, transparent);
+                    z-index: -10;
+                    border-radius: inherit;
+                    transition: --rotation .1s linear,
+                        --color .25s linear;
+                }
+                &:hover:not(:disabled) {
+                    background-color: var(--hover-background-color);
+                    &:before {
+                        --rotation: 180deg;
+                        --color: var(--accent-color);
+                    }
+                }
+            }
+        }
+    }
+    & img {
+        height: 70vh;
+    }
+    & .packedEditions {
+        display: flex;
+        gap: 20px;
+        justify-content: space-between;
+        padding: 20px;
+        isolation: isolate;
+        & .edition {
+            width: 105px;
+            text-align: center;
+            padding: 5px;
+            border-radius: 10px;
+            position: relative;
+            z-index: 100;
+            &:before {
+                content: "";
+                --rotation: 0deg;
+                --color: rgb(255, 255, 255);
+                position: absolute;
+                inset: -3px;
+                background: conic-gradient(from var(--rotation), var(--color) 20%, transparent 30%, transparent 180deg, var(--color) 20% 270deg, transparent 30%, transparent);
+                z-index: -10;
+                border-radius: inherit;
+                transition: --rotation .1s linear,
+                    --color .25s linear;
+            }
+            &:hover {
+                & div {
+                    background-color: var(--hover-background-color);
+                }
+            }
+            &:has(input:checked) {
+                &:before {
+                    --rotation: 180deg;
+                    --color: var(--bright-accent-color);
+                }
+            }
+            & img {
+                width: 100px;
+                height: 100px;
+                object-fit: contain;
+            }
+            & input {
+                display: none;
+            }
+            & div {
+                border-radius: inherit;
+                inset: 0;
+                z-index: -9;
+                position: absolute;
+                background-color: var(--full-background-color);
+                transition: background-color border-color .1s linear;
+            }
+        }
+    }
+}
+.topbar {
+    &:before {
+        content: "";
+        --rotation: 0deg;
+        --color: rgb(255, 255, 255);
+        position: absolute;
+        height: 10px;
+        bottom: 0;
+        width: 100%;
+        left: 0px;
+        transform: translateY(50%);
+        background: linear-gradient(to right, var(--accent-color) 25%, var(--bright-accent-color) 50%, var(--accent-color) 75%);
+        background-size: 200% 100%;
+        z-index: 10;
+        border-radius: inherit;
+        animation: BSFR 1s linear infinite;
+    }
+    -webkit-app-region: drag;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 50px;
+    padding-right: 50px;
+    height: 20px !important;
+    font-size: 18px;
+    line-height: 20px;
+    position: relative;
+    & .topbarbuttons {
+        & button {
+            -webkit-app-region: no-drag;
+            font-family: lemonTopBar;
+            font-size: xx-large;
+            background: none;
+            border: none;
+            height: inherit;
+            aspect-ratio: 1 / 1;
+            padding: 3px;
+            &:hover {
+                color: gray;
+            }
+        }
+    }
+    & * {
+        height: inherit !important;
+    }
+    & img {
+        top: 50%;
+        transform: translateY(-50%);
+        position: absolute;
+    }
+    & .imgcontainer {
+        height: inherit;
+        aspect-ratio: 1 / 1;
+        position: relative;
+    }
+    & div {
+        display: flex;
+        gap: 5px;
+        position: relative;
+    }
+}
+@keyframes BSFR {
+    from {
+        background-position: 0vw 0vw;
+    }
+    to {
+        background-position: 200vw 0vw;
+    }
+}
+.grayed {
+    color: var(--accent-color);
+}
+.loadingcircle {
+    animation: spin 3s linear infinite;
+    width: 100px;
+    aspect-ratio: 1 / 1;
+    display: none;
+    &.active {
+        display: inline-block;
+    }
+}
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+.license {
+    height: calc(80vh - 150px);
+    width: 100%;
+    overflow: auto;
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lemon installer</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="jszip.min.js"></script>
+    <script src="index.js"></script>
+</head>
+<body>
+    <div class="page currentpage" id="start">
+        <div class="topbar">
+            <div>
+                <div class="imgcontainer">
+                    <img src="assets/logo/logo.png" alt="">
+                </div>
+                <p>lemon installer</p>
+                <p class="grayed">waiting</p>
+            </div>
+            <div class="topbarbuttons">
+                <button onclick="window.minimize();">-</button>
+                <button onclick="window.close();">X</button>
+            </div>
+        </div>
+        <div class="pagecontents">
+            <img src="assets/logo/logo.png">
+            <div class="nonimagecontents">
+                <div class="waiting">
+                    <div>
+                        <h1>waiting for installer...</h1>
+                        <p id="progress"></p>
+                    </div>
+                </div>
+                <div class="prevnextbuttons">
+                    <button onclick="window.close();">cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page" id="proceed">
+        <div class="topbar">
+            <div>
+                <div class="imgcontainer">
+                    <img src="assets/logo/logo.png" alt="">
+                </div>
+                <p>lemon installer</p>
+                <p class="grayed">proceed to install</p>
+            </div>
+            <div class="topbarbuttons">
+                <button onclick="window.minimize();">-</button>
+                <button onclick="window.close();">X</button>
+            </div>
+        </div>
+        <div class="pagecontents">
+            <div class="nonimagecontents">
+                <h1>proceed in the installer</h1>
+                <p>a installer should have opened, please follow the steps in the installer</p>
+            </div>
+        </div>
+    </div>
+</html>

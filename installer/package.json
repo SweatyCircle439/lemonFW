@@ -1,0 +1,36 @@
+{
+  "name": "lemonfw",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": "index.js",
+  "scripts": {
+    "test": "electron .",
+    "build": "node pack.js",
+    "createInstallerZip": "node pack.js -uts=2"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@electron/remote": "^2.1.2",
+    "electron-packager": "^17.1.2",
+    "express": "^4.21.0",
+    "fs-extra": "^11.2.0",
+    "ip": "^2.0.1",
+    "jszip": "^3.10.1",
+    "multer": "^1.4.5-lts.1",
+    "shelljs": "^0.8.5"
+  },
+  "devDependencies": {
+    "electron": "^31.2.0",
+    "electron-builder": "^25.0.5"
+  },
+  "pkg": {
+    "targets": [
+      "node14-linux-x64",
+      "node14-macos-x64",
+      "node14-win-x64"
+    ]
+  }
+}

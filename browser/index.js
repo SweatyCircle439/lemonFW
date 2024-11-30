@@ -12,6 +12,9 @@ function max() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById("newTab").addEventListener("click", async () => {
+        openTab(await createTab());
+    });
     document.getElementById('maximize').addEventListener('click',
         () => {
             if (maxcooldown == 0) {
@@ -34,6 +37,9 @@ setBrowserStylePropertyChangeListener((property, value) => {
         document.documentElement.style.setProperty(`--main-button-color`, `var(--theme-main-button-color-${colorScheme})`);
         document.documentElement.style.setProperty(`--main-button-color`, `var(--theme-main-button-color-${colorScheme})`);
         document.documentElement.style.setProperty(`--main-button-hover-color`, `var(--theme-main-button-hover-color-${colorScheme})`);
+        document.documentElement.style.setProperty(`--main-base-tab-background`, `var(--theme-main-base-tab-background-${colorScheme})`);
+        document.documentElement.style.setProperty(`--main-base-tab-hover-background`, `var(--theme-main-base-tab-hover-background-${colorScheme})`);
+        document.documentElement.style.setProperty(`--main-base-tab-clip-path`, `var(--theme-main-base-tab-clip-path-${colorScheme})`);
         return
     }
     document.documentElement.style.setProperty(`--main-${property}`, value);
@@ -50,6 +56,9 @@ async function load () {
             return `${urlbar.value}`;
         }
         if (urlbar.value.startsWith("lmn://")) {
+            return `${urlbar.value}`;
+        }
+        if (urlbar.value.startsWith("data:")) {
             return `${urlbar.value}`;
         }
         if (urlbar.value.startsWith("http://")) {
@@ -91,8 +100,7 @@ async function main() {
     title.innerText = browserName;
     document.body.appendChild(title);
     
-    window.createTab();
-    window.openTab(0);
+    window.openTab(await window.createTab());
 
     document.getElementById('minimize').addEventListener('click', () => {
         window.minimize();
@@ -119,7 +127,7 @@ async function main() {
         load();
     }
 }
-main();
+document.addEventListener("DOMContentLoaded", main);
 
 function updatemaxcooldown () {
     if (maxcooldown > 0) {
@@ -129,3 +137,72 @@ function updatemaxcooldown () {
 }
 
 updatemaxcooldown();
+
+window.setUpdateTabsListener(async(tabs) => {
+    const tabsElement = document.getElementById('tabs');
+    tabsElement.innerHTML = "";
+    for (const tab of tabs) {
+        const tabElement = document.createElement("div");
+        tabElement.classList.add("tab");
+        tabElement.style.background = tab.style.background ? tab.style.background : "";
+        tabElement.style.clipPath = tab.style.clipPath ? tab.style.clipPath : "";
+        tabElement.innerHTML = tab.innerHTML ? tab.innerHTML : `<img class=\"tab-icon\" data-replace=\"src\" data-replaceWith=\"icon\"></img><p class=\"tab-name\" data-replace=\"innerText\" data-replaceWith=\"title\"></p>`;
+        tabElement.addEventListener("click", async() => {
+            await window.openTab(tab.id);
+        });
+        for (const key in tab.css) {
+            if (Object.prototype.hasOwnProperty.call(tab.css, key)) {
+                const value = tab.css[key];
+                tabElement.style[key] = value;
+            }
+        }
+        if (!tab.hidden) {
+            tabsElement.appendChild(tabElement);
+        }
+        function replaceElem(e) {
+            for (const child of e.children) {
+                if (child.tagName === "SCRIPT") {
+                    child.remove();
+                }
+                if (child.dataset.replace) {
+                    if (child.dataset.replacewith) {
+                        let result = "";
+                        if (child.dataset.replacewith == "icon") {
+                            result = tab.icon;
+                        }
+                        if (child.dataset.replacewith == "title") {
+                            console.log(tab);
+                            result = tab.name;
+                        }
+                        console.log(child.dataset.replacewith);
+                        console.log(result);
+                        child[child.dataset.replace] = result;
+                    }
+                }
+                for (const key in child) {
+                    if (key.startsWith('on')) {
+                        child[key] = () => {};
+                    }
+                }
+                replaceElem(child);
+            }
+        }
+        tabElement.style.position = 'relative';
+        tabElement.style.top = 'unset';
+        tabElement.style.left = 'unset';
+        tabElement.style.bottom = 'unset';
+        tabElement.style.right = 'unset';
+        tabElement.style.marginLeft = 'unset';
+        tabElement.style.marginRight = 'unset';
+        tabElement.style.marginTop = 'unset';
+        tabElement.style.marginBottom = 'unset';
+        replaceElem(tabElement);
+        const tabCloseElement = document.createElement('button');
+        tabCloseElement.innerText = "x";
+        tabCloseElement.classList.add("tab-close");
+        tabCloseElement.addEventListener('click', () => {
+            window.closeTab(tab.id);
+        });
+        tabElement.appendChild(tabCloseElement);
+    }
+});

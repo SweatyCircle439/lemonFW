@@ -1,0 +1,285 @@
+@font-face {
+    font-family: "lemonTopBar";
+    src:
+    local("lemonTopBar"),
+    url("assets/fonts/lemonTopBar.otf") format("opentype")
+}
+@font-face {
+    font-family: "rokkitt";
+    src:
+    local("rokkitt"),
+    url("assets/fonts/Rokkitt/Rokkitt-VariableFont_wght.ttf") format("truetype")
+}
+@font-face {
+    font-family: "roboto slab";
+    src:
+    local("roboto slab"),
+    url("assets/fonts/Roboto_Slab/RobotoSlab-VariableFont_wght.ttf") format("truetype")
+}* {
+    margin: 0px;
+    padding: 0px;
+    font-family: 'roboto slab', serif;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
+    fill: white;
+    color: white;
+}
+h1, h2, h3 {
+    font-family: 'rokkitt', serif;
+    font-weight: 900;
+}
+.page {
+    position: absolute;
+    inset: 0;
+    border-radius: 50px;
+    background-color: #1e1e1ec8;
+    display: none;
+    overflow: hidden;
+}
+.currentpage {
+    display: block;
+}
+@property --rotation {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+@property --color {
+    syntax: "<color>";
+    initial-value: white;
+    inherits: false;
+}
+
+.pagecontents {
+    padding: 20px;
+    display: flex;
+    position: relative;
+    align-items: center;
+    gap: 30px;
+    height: calc(100% - 75px);
+    justify-content: space-around;
+    & .nonimagecontents {
+        display: flex;
+        gap: 20px;
+        flex-direction: column;
+        & .prevnextbuttons {
+            display: flex;
+            gap: 10px;
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 100px);
+            justify-content: space-between;
+            isolation: isolate;
+            & button {
+                padding: 5px;
+                background: none;
+                border: none;
+                border-radius: 10px;
+                transition: background-color .1s linear;
+                position: relative;
+                background-color: #1e1e1e;
+                &:before {
+                    content: "";
+                    --rotation: 0deg;
+                    --color: white;
+                    position: absolute;
+                    inset: -3px;
+                    background: conic-gradient(from var(--rotation), var(--color) 20%, transparent 30%, transparent 180deg, var(--color) 20% 270deg, transparent 30%, transparent);
+                    z-index: -10;
+                    border-radius: inherit;
+                    transition: --rotation .1s linear,
+                        --color .25s linear;
+                }
+                &:hover:not(:disabled) {
+                    background-color: rgb(79, 79, 79);
+                    &:before {
+                        --rotation: 180deg;
+                        --color: #35663F;
+                    }
+                }
+            }
+        }
+    }
+    & img {
+        height: 70vh;
+    }
+    & .packedEditions {
+        display: flex;
+        gap: 20px;
+        justify-content: space-between;
+        padding: 20px;
+        & .edition {
+            width: 105px;
+            text-align: center;
+            padding: 5px;
+            border-radius: 10px;
+            transition: background-color border-color .1s linear;
+            position: relative;
+            background-color: #1e1e1e;
+            &:before {
+                content: "";
+                --rotation: 0deg;
+                --color: rgb(255, 255, 255);
+                position: absolute;
+                inset: -3px;
+                background: conic-gradient(from var(--rotation), var(--color) 20%, transparent 30%, transparent 180deg, var(--color) 20% 270deg, transparent 30%, transparent);
+                z-index: -10;
+                border-radius: inherit;
+                transition: --rotation .1s linear,
+                    --color .25s linear;
+            }
+            &:hover {
+                background-color: #2e2e2e;
+            }
+            &:has(input:checked) {
+                &:before {
+                    --rotation: 180deg;
+                    --color: lime;
+                }
+            }
+            & img {
+                width: 100px;
+                height: 100px;
+                object-fit: contain;
+            }
+            & input {
+                display: none;
+            }
+        }
+    }
+}
+.topbar {
+    &:before {
+        content: "";
+        --rotation: 0deg;
+        --color: rgb(255, 255, 255);
+        position: absolute;
+        height: 10px;
+        bottom: 0;
+        width: 100%;
+        left: 0px;
+        transform: translateY(50%);
+        background: linear-gradient(to right, #35663F 25%, lime 50%, #35663F 75%);
+        background-size: 200% 100%;
+        z-index: 10;
+        border-radius: inherit;
+        animation: BSFR 1s linear infinite;
+    }
+    -webkit-app-region: drag;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 50px;
+    padding-right: 50px;
+    height: 20px !important;
+    font-size: 18px;
+    line-height: 20px;
+    position: relative;
+    & .topbarbuttons {
+        & button {
+            -webkit-app-region: no-drag;
+            font-family: lemonTopBar;
+            font-size: xx-large;
+            background: none;
+            border: none;
+            height: inherit;
+            aspect-ratio: 1 / 1;
+            padding: 3px;
+            &:hover {
+                color: gray;
+            }
+        }
+    }
+    & * {
+        height: inherit !important;
+    }
+    & img {
+        top: 50%;
+        transform: translateY(-50%);
+        position: absolute;
+    }
+    & .imgcontainer {
+        height: inherit;
+        aspect-ratio: 1 / 1;
+        position: relative;
+    }
+    & div {
+        display: flex;
+        gap: 5px;
+        position: relative;
+    }
+}
+@keyframes BSFR {
+    from {
+        background-position: 0vw 0vw;
+    }
+    to {
+        background-position: 200vw 0vw;
+    }
+}
+.grayed {
+    color: #35663F;
+}
+.loadingcircle {
+    animation: spin 3s linear infinite;
+    width: 100px;
+    aspect-ratio: 1 / 1;
+    display: none;
+    &.active {
+        display: inline-block;
+    }
+}
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+.license {
+    height: calc(80vh - 150px);
+    width: 100%;
+    overflow: auto;
+}
+
+.waiting {
+    background: #1e1e1e;
+    position: relative;
+    width: 70vh;
+    height: 70vh;
+    isolation: isolate;
+    z-index: 10;
+    border-radius: 10px;
+    &:before {
+        --color: #35663F;
+        content: "";
+        --rotation: 0deg;
+        position: absolute;
+        inset: -10px;
+        display: block;
+        background: conic-gradient(from var(--rotation), var(--color) 20%, transparent 30%, transparent 180deg, var(--color) 20% 270deg, transparent 30%, transparent);
+        z-index: -10;
+        border-radius: inherit;
+        animation: rotationspin 2s linear infinite;
+    }
+    & div {
+        background: #1e1e1e;
+        inset: 0px;
+        position: absolute;
+        padding: 10px;
+        border-radius: inherit;
+    }
+}
+
+@keyframes rotationspin {
+    from {
+        --rotation: 0deg;
+    }
+    to {
+        --rotation: 360deg;
+    }
+}
