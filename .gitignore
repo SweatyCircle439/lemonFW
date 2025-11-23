@@ -8,3 +8,4 @@ uninstaller/node_modules
 uninstaller/dist
 installer/installer
 installer/pages/packededitions/*
+*.exe

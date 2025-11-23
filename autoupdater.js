@@ -19,7 +19,7 @@ const currentLemonEdition = "lemonFW"; // if your update host hosts multiple edi
  * the host must be available from anywhere in the world
  * the host must be able to handle (1 request per 10 minutes + 1 request per update button click) per user
  */
-const host = "http://qserver.benedictus.nu/lemon/autoupdatehost"; // set this to your host
+const host = "https://sweatycircle439.com/lemon/autoupdatehost"; // set this to your host
 // end of configuration
 
 const fetch = require("node-fetch");

@@ -70,6 +70,9 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 window.addEventListener('keydown', (event) => {
-    console.log(event.key);
     ipcRenderer.invoke("keydown", event.key);
 });
+
+window.setTorEnabled = (...args) => {
+    ipcRenderer.invoke("setTorEnabled", ...args);
+}

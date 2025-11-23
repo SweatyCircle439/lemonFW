@@ -129,6 +129,7 @@ body, html {
     margin-bottom: auto;
     padding: 6px;
     border-radius: 3px;
+    gap: 5px;
 }
 
 .tabinfo button svg {

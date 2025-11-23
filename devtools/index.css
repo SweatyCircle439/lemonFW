@@ -3,6 +3,11 @@
     --main-highlight-color: #2e2e2e;
     --secondary-highlight-color: #3e3e3e;
     --main-text-color: #ffffff;
+    --ET-element-EST: rgb(0, 119, 255);
+    --ET-element-id: rgb(113, 32, 218);
+    --ET-element-pseudo: rgb(0, 255, 42);
+    --ET-element-class: goldenrod;
+    --ET-element-tag: var(--main-text-color);
 }
 
 ::-webkit-scrollbar {
@@ -24,6 +29,35 @@
     font-family: main;
     src: url(font.ttf);
 }
+button.control {
+    background: none;
+    position: absolute;
+    right: 30px;
+    bottom: calc(40vh - 20px);
+    width: 20px;
+    height: 20px;
+    border: 2px solid greenyellow;
+    border-radius: 25%;
+    z-index: 1234567890;
+    cursor: pointer;
+    transition: all 0.2s;
+    &:hover {
+        transform: scale(1.2);
+        background-color: var(--main-highlight-color);
+    }
+    &:disabled {
+        border-color: lightgray;
+        transform: scale(.8);
+        & svg {
+            fill: lightgray;
+        }
+    }
+    & svg {
+        width: 100%;
+        height: 100%;
+        fill: greenyellow;
+    }
+}
 html,
 body {
     background-color: var(--main-bg-color);
@@ -36,8 +70,9 @@ body {
     padding: 0;
     display: flex;
     flex-direction: column;
+    color: white;
 }
-#tabs {
+.tabs {
     width: 100%;
     height: 30px;
     background-color: var(--main-bg-color);
@@ -45,18 +80,28 @@ body {
     display: flex;
     overflow-x: auto;
     & button {
+        all: unset;
         outline: none;
         background-color: transparent;
         color: var(--main-text-color);
         cursor: pointer;
         text-align: center;
         margin-right: 10px;
-        padding: 10px;
+        padding: 0px 10px;
         font-size: 16px;
         height: 100%;
         line-height: 0px;
+        display: flex;
+        width: max-content;
+        align-items: center;
+        justify-content: center;
         border: none;
         transition: all 0.5s;
+        word-break: keep-all;
+        & span {
+            display: flex;
+            gap: 2px;
+        }
         &:hover,&.active {
             background-color: var(--main-highlight-color);
             -webkit-box-shadow: 0px 0px 31px 10px var(--main-highlight-color);
@@ -71,33 +116,179 @@ body {
     flex-direction: column;
     width: 100%;
     flex: 1;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
 }
 #consolecommand {
     height: 40vh;
     width: 100%;
 }
 * {
-    font-family: main !important;
+    font-family: main, 'Font Awesome 6 Free', 'Font Awesome 5 Brands' !important;
+    font-weight: 900;
     margin: 0;
     padding: 0;
 }
 .codicon:before {
     font: normal normal normal 16px / 1 codicon !important;
 }
-#resize-bar {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 10px;
-    height: 100vh;
-    z-index: 1234567890;
+.resize-bar {
+    z-index: 123456789;
     background-color: transparent;
     transition: 0.2s all;
     &:hover {
         background-color: var(--secondary-highlight-color);
     }
+    &.vertical {
+        width: 10px;
+        height: 100vh;
+    }
+    &.horizontal {
+        width: 100vw;
+        height: 10px;
+    }
+    &.root {
+        z-index: 1234567890;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+}
+#consoleoutputsizepreview.active {
+    flex: 1;
 }
 #consoleoutput {
     flex: 1;
+}
+#consoleoptions {
+    width: calc(100vw - 30px);
+    align-self: center;
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    & span {
+        background-color: var(--main-highlight-color);
+        padding: 5px;
+        border-radius: 25px;
+        display: flex;
+        width: max-content;
+        gap: 5px;
+        &:hover {
+            background-color: var(--secondary-highlight-color);
+        }
+    }
+}
+
+.sizepreview {
+    width: 100%;
+    position: relative;
+    border-radius: 100px;
+    background: var(--main-highlight-color);
+    transform: scale(0.9);
+    align-self: center;
+    &::before {
+        content: "";
+        position: absolute;
+        border-radius: inherit;
+        background: var(--secondary-highlight-color);
+        inset: 10%;
+    }
+}
+
+.sizepreview:not(.active) {
+    width: 0px !important;
+    height: 0px !important;
+}
+
+details {
+    margin-left: 20px;
+    &[open] {
+        border-left: 3px solid var(--secondary-highlight-color);
+    }
+    & details {
+        margin-left: 0px !important;
+    }
+    & li {
+        margin-left: 15px !important;
+    }
+    & button {
+        all: unset;
+        color: var(--main-text-color);
+        border-radius: 5px;
+        padding: 5px;
+        & span {
+            word-break: break-all;
+        }
+        &:hover {
+            background-color: var(--secondary-highlight-color);
+        }
+        &.active {
+            background-color: var(--main-highlight-color);
+        }
+    }
+}
+
+#topbar {
+    width: 100vw;
+    background-color: var(--main-bg-color);
+    z-index: 1234567890;
+    position: relative;
+    width: 90vw;
+    margin: 0 auto;
+    & #title {
+        color: yellow;
+    }
+    & #close {
+        all: unset;
+        position: absolute;
+        right: 10px;
+        cursor: pointer;
+        font-size: 25px;
+        &:hover {
+            color: red;
+        }
+    }
+}
+
+.elementBlock {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid black inset;
+}
+
+#elementBlock {
+    background: rgb(173, 216, 230);
+}
+
+.paddingElementBlock {
+    background: rgba(3, 132, 3, 0.5);
+    border: 1px dashed black;
+}
+
+.borderElementBlock {
+    background: rgba(255, 204, 0, 0.5);
+}
+
+#elementBlocksContainer {
+    position: relative;
+    width: 100%;
+    height: 30vh;
+}
+
+#hoverSelect {
+    background: none;
+    color: white;
+    border: none;
+    padding: 5px;
+    &:hover {
+        background: #3e3e3e3e;
+    }
+}
+
+.cdr.unicode-highlight {
+    border: none !important;
+    background: none !important;
 }

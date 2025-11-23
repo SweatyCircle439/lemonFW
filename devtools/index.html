@@ -5,21 +5,84 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
         <script src="monaco-editor/vs/loader.js"></script>
-        <link rel="stylesheet" href="index.css">
+        <link rel="stylesheet" href="index.css" />
         <script src="index.js"></script>
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+            rel="stylesheet"
+        />
     </head>
     <body>
-        <div id="resize-bar" draggable></div>
-        <div id="tabs" onWheel= "this.scrollLeft+=event.deltaY">
+        <div id="resize-bar" class="resize-bar vertical root"></div>
+        <div id="topbar">
+            <span id="title">  lemon devtools version 1.1.0</span>
+            <button id="close"><span>x</span></button>
+        </div>
+        <div class="tabs" id="tabs" onWheel="this.scrollLeft+=event.deltaY">
             <button data-open="codecontainer" class="active">code</button>
-            <button data-open="codecontainer">styles</button>
-            <button data-open="consolecontainer">console</button>
+            <button data-open="elementtreecontainer">element tree</button>
+            <button data-open="stylecontainer">styles</button>
+            <button data-open="consolecontainer" id="consoletab">console</button>
             <button>network</button>
         </div>
         <div class="container" id="codecontainer"></div>
+        <div class="container" id="stylecontainer">
+            <div class="tabs" id="styletabs" onWheel="this.scrollLeft+=event.deltaY">
+                <button data-open="stylestlcontainer">styles</button>
+                <button data-open="computedstylecontainer">computed</button>
+            </div>
+            <div class="container" id="stylestlcontainer"></div>
+            <div class="container" id="computedstylecontainer">
+                <div id="elementBlocksContainer">
+                    <div class="elementBlock borderElementBlock" id="leftBorderElementBlock">
+                    </div>
+                    <div class="elementBlock borderElementBlock" id="topBorderElementBlock">
+                    </div>
+                    <div class="elementBlock borderElementBlock" id="bottomBorderElementBlock">
+                    </div>
+                    <div class="elementBlock borderElementBlock" id="rightBorderElementBlock">
+                    </div>
+                    <div class="elementBlock paddingElementBlock" id="leftPaddingElementBlock">
+                    </div>
+                    <div class="elementBlock paddingElementBlock" id="topPaddingElementBlock">
+                    </div>
+                    <div class="elementBlock paddingElementBlock" id="bottomPaddingElementBlock">
+                    </div>
+                    <div class="elementBlock paddingElementBlock" id="rightPaddingElementBlock">
+                    </div>
+                    <div class="elementBlock" id="elementBlock">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container" id="elementtreecontainer">
+            <button id="hoverSelect">
+                 select by hover
+            </button>
+            <ul id="elementtree"></ul>
+        </div>
         <div class="container" id="consolecontainer">
+            <button class="control" id="consoleSendButton">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                    <!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                    <path
+                        d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2 160 448c0 17.7 14.3 32 32 32s32-14.3 32-32l0-306.7L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"
+                    />
+                </svg>
+            </button>
             <div id="consoleoutput"></div>
+            <div class="sizepreview" id="consoleoutputsizepreview"></div>
+            <div class="resize-bar horizontal" id="consoleresize"></div>
+            <div id="consoleoptions">
+                <span>
+                    <input type="checkbox" name="devtoolsScope" id="devtoolsScope">
+                    <label for="devtoolsScope">
+                        lemonscoping
+                    </label>
+                </span>
+            </div>
             <div id="consolecommand"></div>
+            <div class="sizepreview" id="consolecommandsizepreview"></div>
         </div>
     </body>
 </html>

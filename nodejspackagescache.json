@@ -1,0 +1,9 @@
+{
+    "path": {
+        "status": "low_level_threat"
+    },
+    "child_process": {
+        "status": "banned",
+        "message": "it allows execution of native code"
+    }
+}

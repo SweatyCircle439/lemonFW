@@ -1,27 +1,66 @@
-let maxcooldown = 0;
 let ismaximized = true;
 
+let maxunmaxcooldown = 100;
+
+let maxunmaxcooldowncurrent  = 0;
+
+window.setInterval(() => {
+    maxunmaxcooldowncurrent -= maxunmaxcooldown / 3;
+    if (maxunmaxcooldowncurrent <= 0) {
+        maxunmaxcooldowncurrent = 0;
+    }
+}, maxunmaxcooldown / 3);
+
 function unmax() {
-    window.unmaximize();
-    document.getElementById('maximize').innerText = 'g';
+    if (maxunmaxcooldowncurrent == 0) {
+        window.unmaximize();
+        document.getElementById('maximize').innerText = 'g';
+        maxunmaxcooldowncurrent = maxunmaxcooldown;
+    }
 }
 
 function max() {
-    window.maximize();
-    document.getElementById('maximize').innerText = 's';
+    if (maxunmaxcooldowncurrent == 0) {
+        window.maximize();
+        document.getElementById('maximize').innerText = 's';
+        maxunmaxcooldowncurrent = maxunmaxcooldown;
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    const tortoggle = document.getElementById('torToggle');
+    let torEnabled = false;
+    function updateTorIcon() {
+        tortoggle.innerHTML = `
+            <img src="assets/logo/logoTor.png" alt="Tor" style="width: 20px; height: 20px;">
+            ${
+                torEnabled ?
+                `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M192 64C86 64 0 150 0 256S86 448 192 448l192 0c106 0 192-86 192-192s-86-192-192-192L192 64zm192 96a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"/></svg>` :
+                `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M384 128c70.7 0 128 57.3 128 128s-57.3 128-128 128l-192 0c-70.7 0-128-57.3-128-128s57.3-128 128-128l192 0zM576 256c0-106-86-192-192-192L192 64C86 64 0 150 0 256S86 448 192 448l192 0c106 0 192-86 192-192zM192 352a96 96 0 1 0 0-192 96 96 0 1 0 0 192z"/></svg>`
+            }
+        `
+    }
+    tortoggle.addEventListener('click', async () => {
+        torEnabled = !torEnabled;
+        try {
+            await window.setTorEnabled(torEnabled);
+        } catch (error) {
+            console.error(error);
+        }
+        updateTorIcon();
+    });
+    updateTorIcon();
     document.getElementById("newTab").addEventListener("click", async () => {
         openTab(await createTab());
     });
     document.getElementById('maximize').addEventListener('click',
         () => {
-            if (maxcooldown == 0) {
-                ismaximized ? unmax() : max();
-                ismaximized = !ismaximized;
-                maxcooldown = 50;
+            if (ismaximized) {
+                unmax();
+            }else {
+                max();
             }
+            ismaximized = !ismaximized;
         }
     );
 });
@@ -49,31 +88,7 @@ async function load () {
     const urlbar = document.querySelector(".urlbar");
     const tldlist = await getTldList();
     const geturl = () => {
-        if (urlbar.value == "") {
-            return "lmn://newtab";
-        }
-        if (urlbar.value.startsWith("file:///")) {
-            return `${urlbar.value}`;
-        }
-        if (urlbar.value.startsWith("lmn://")) {
-            return `${urlbar.value}`;
-        }
-        if (urlbar.value.startsWith("data:")) {
-            return `${urlbar.value}`;
-        }
-        if (urlbar.value.startsWith("http://")) {
-            return `${urlbar.value}`;
-        }else if (urlbar.value.startsWith("https://")) {
-            return `${urlbar.value}`;
-        }else if (urlbar.value.startsWith("localhost")) {
-            return `http://${urlbar.value}`;
-        }
-        for (const tld of tldlist) {
-            if (urlbar.value.split("/")[0].toUpperCase().endsWith(`.${tld}`)) {
-                return `http://${urlbar.value}`;
-            }
-        }
-        return `https://duckduckgo.com/?q=${encodeURI(urlbar.value)}`;
+        return urlbar.value;
     }
     animation = document.querySelector("#reload svg").animate([{ transform: "rotate(0)" },
         { transform: "rotate(360deg)" },], {duration: 5000, iterations: 999999999999999})
@@ -106,10 +121,6 @@ async function main() {
         window.minimize();
     });
 
-    document.getElementById('maximize').addEventListener('click', () => {
-            window.maximize();
-    });
-
     document.getElementById('close').addEventListener('click', () => {
         window.close();
     });
@@ -128,15 +139,6 @@ async function main() {
     }
 }
 document.addEventListener("DOMContentLoaded", main);
-
-function updatemaxcooldown () {
-    if (maxcooldown > 0) {
-        maxcooldown--;
-    }
-    window.requestAnimationFrame(updatemaxcooldown);
-}
-
-updatemaxcooldown();
 
 window.setUpdateTabsListener(async(tabs) => {
     const tabsElement = document.getElementById('tabs');

@@ -6,6 +6,8 @@
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
     <script src="index.js"></script>
+    <script src="nodeindex.js" lang="nodeJS"></script>
+    <script src="pyindex.py" lang="python"></script>
     <link rel="icon" href="assets/icons/logo.ico">
 </head>
 <body>
@@ -93,6 +95,9 @@ fieldset.roundsquare legend{
     padding: 1rem 3rem;
     border-radius: 0 0 1rem 1rem;
     margin-inline: auto;
+    &::before {
+        content: "";
+    }
 }
 .theme-selector input[type="radio"] {
     appearance: none;
@@ -100,9 +105,14 @@ fieldset.roundsquare legend{
     height: 40px;
     border-radius: 100%;
     background-size: 100% 100%;
+    padding: 20px;
+    padding-right: 5px;
+    padding-bottom: 5px;
 }
 .theme-selector input[type="radio"]:checked {
-    border: 3px solid var(--rim-color);
+    border: 20px solid var(--rim-color);
+    border-top-width: 15px;
+    border-left-width: 15px;
 }
 .theme-selector input[type="radio"].vulcano{
     background-image: url(assets/ct/vulcano.png);
@@ -139,27 +149,3 @@ img {
     background-size:cover;
 }
 </style>
-<script>
-
-    const matches = document.querySelectorAll('.theme-selector input[type="radio"]');
-    for (match in matches) {
-        matches[match].onchange = function() {
-            lmn.setBrowserStyleProperty("color-scheme", this.value);
-        }
-    }
-    function ftpqr() {
-        lmn.startFPhost();
-        const image = document.createElement("img");
-        image.src = `http://qserver.benedictus.nu/api/chart/qr?size=100x100&&text=${encodeURI(`http://${lmn.getIP()}:130`)}&&type=image`;
-        document.body.appendChild(image);
-    }
-    lmn.lmntab.InnerHTML("<p>n<img class=\"tab-icon\" data-replace=\"src\" data-replaceWith=\"icon\">w tab</p>");
-    lmn.lmntab.css("fontSize", "40px");
-    lmn.lmntab.css("fontWeight", "bold");
-    lmn.lmntab.css("justifyContent", "center");
-    lmn.lmntab.css("background", "url(assets/lemonjc.png)");
-    lmn.lmntab.css("backgroundRepeat", "no-repeat");
-    lmn.lmntab.css("backgroundSize", "200%");
-    lmn.lmntab.css("backgroundPosition", "50% 50%");
-    lmn.lmntab.css("color", "white");
-</script>

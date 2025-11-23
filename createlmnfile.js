@@ -55,8 +55,16 @@ async function main () {
     updateconsole();
     finallogs.push("· building application...");
     updateconsole();
-    const buildprocess = exec(`npx electron-builder -w`, { cwd: __dirname });
+    const buildprocess = exec([
+        `npx`, `electron-packager`,
+        `.`, name,
+        `--build-version=${version}`,
+        `--protocol=http`, `--protocol-name="hypertext transport protocol"`,
+        `--out=lmnfileConstruction`, `--icon=${path.join(__dirname, "browser", "assets", "logo", "logo.png")}`,
+        // `--protocol=https`, `--protocol-name=hypertext transport protocol secure`,
+    ].join(" "), { cwd: __dirname });
     buildprocess.stdout.on('data', data => {updateconsole();console.log(data);});
+    buildprocess.stderr.on('data', data => {updateconsole();console.log(data);});
     buildprocess.on("exit", async code => {
         if (code === 0) {
             finallogs.push("· building complete");
@@ -71,56 +79,77 @@ async function main () {
                     license: "LICENSE",
                     version: version,
                     installers: {
-                        windows: "installer.exe"
+                        windows: "windows.lmn"
                     }
                 },
                 null,
                 4
             ));
             console.log("· lmn configuration created");
-            console.log("· packing logo...")
-            zipfile.file("logo.png", fs.readFileSync(path.join(path.join(__dirname, "browser", "assets", "logo", "logo.png"))));
-            console.log("· logo packed successfully");
             console.log("· packing license...")
             zipfile.file("LICENSE", fs.readFileSync(path.join(path.join(__dirname, "LICENSE"))));
             console.log("· license packed successfully");
-            console.log("· packing installer...");
-            for (const file of fs.readdirSync(path.join(path.join(__dirname, "dist")))) {
-                if (file.endsWith(".exe") && file.includes("Setup")) {
-                    zipfile.file("installer.exe", fs.readFileSync(path.join(path.join(__dirname, "dist", file))));
+            console.log("· packing application...");
+            for (const folder of fs.readdirSync(path.join(__dirname, "lmnfileConstruction"))) {
+                const appzip = new zip();
+                function tree(prevfolder = appzip, treepath = path.join(__dirname, "lmnfileConstruction", folder)) {
+                    return new Promise(async(resolve, reject) => {
+                        for (const file of fs.readdirSync(treepath)) {
+                            if (fs.lstatSync(path.join(treepath, file)).isDirectory()) {
+                                const newfolder = prevfolder.folder(file);
+                                await tree(newfolder, path.join(treepath, file));
+                                resolve();
+                            }else {
+                                const stream = fs.createReadStream(path.join(treepath, file));
+                                prevfolder.file(file, stream);
+                                console.log(`· packed ${file}`);
+                                stream.on('end', resolve);
+                            }
+                        }
+                    });
                 }
+                await tree();
+                const stream = appzip.generateNodeStream({type: "nodebuffer"});
+                zipfile.file(`windows.lmn`, stream);
+                await new Promise((resolve, reject) => stream.on('end', resolve));
             }
-            console.log("· installer packed successfully");
-            const zipcontent = await zipfile.generateAsync({type:"nodebuffer"});
-            console.log("· cleaning now unnecessary files...");
-            fs.emptyDirSync(path.join(__dirname, "dist"));
-            fs.removeSync(path.join(__dirname, "dist"));
-            console.log("· cleaning complete");
-            fs.writeFileSync(path.join(__dirname, `${version}.lmn`), zipcontent);
-            finallogs.push("! file created successfully");
-            updateconsole();
-            console.log("· checking for config file...");
-            if (fs.existsSync(path.join(__dirname, '.lmn'))) {
-                finallogs.push("· config file found");
+            console.log("· application packed successfully");
+            console.log("· creating lmn file...");
+            const zipstream = zipfile.generateNodeStream({
+                type: 'nodebuffer',
+                streamFiles: true
+            });
+            const writestream = fs.createWriteStream(path.join(__dirname, `${name}-${version}.lmn`));
+            console.log("· write stream Initializing ");
+            zipstream.pipe(writestream).on('finish', () => {
+                finallogs.push("! lmn file created successfully");
+                console.log("· cleaning now unnecessary files...");
+                fs.emptyDirSync(path.join(__dirname, "lmnfileConstruction"));
+                fs.removeSync(path.join(__dirname, "lmnfileConstruction"));
+                console.log("· cleaning complete");
                 updateconsole();
-                finallogs.push("· reading config...");
+                console.log("· checking for config file...");
+                if (fs.existsSync(path.join(__dirname, '.lmn'))) {
+                    finallogs.push("· config file found");
+                    updateconsole();
+                    finallogs.push("· reading config...");
+                    updateconsole();
+                    const config = JSON.parse(fs.readFileSync(path.join(__dirname, '.lmn')));
+                    finallogs.push("· config loaded successfully");
+                    finallogs.push("· updating config...");
+                    updateconsole();
+                    config.push(`${name}-${version}.lmn`);
+                    fs.writeFileSync(path.join(__dirname, '.lmn'), JSON.stringify(config, null, 4));
+                    finallogs.push("· config updated successfully");
+                    finallogs.push("! done");
+                    updateconsole();
+                }else {
+                    finallogs.push("X no config file found");
+                    finallogs.push("! done");
+                    updateconsole();
+                }
                 updateconsole();
-                const config = JSON.parse(fs.readFileSync(path.join(__dirname, '.lmn')));
-                finallogs.push("· config loaded successfully");
-                finallogs.push("· updating config...");
-                updateconsole();
-                config.push(`${version}.lmn`);
-                fs.writeFileSync(path.join(__dirname, '.lmn'), JSON.stringify(config, null, 4));
-                finallogs.push("· config updated successfully");
-                finallogs.push("! done");
-                updateconsole();
-            }else {
-                finallogs.push("X no config file found");
-                finallogs.push("! done");
-                updateconsole();
-            }
-            updateconsole();
-            process.exit(0);
+            });
         } else {
             console.error(`Building failed with code ${code}`);
         }

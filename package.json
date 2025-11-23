@@ -6,27 +6,26 @@
   "bin": "index.js",
   "scripts": {
     "test": "electron .",
-    "build": "node createlmnfile.js"
+    "build": "electron-builder -l"
   },
   "keywords": [],
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
     "@electron/remote": "^2.1.2",
-    "electron-packager": "^17.1.2",
     "express": "^4.21.0",
     "fs-extra": "^11.2.0",
     "ip": "^2.0.1",
     "jszip": "^3.10.1",
+    "luaparse": "^0.3.1",
     "monaco-editor": "^0.52.0",
     "multer": "^1.4.5-lts.1",
-    "node-fetch": "2.7.0",
-    "shelljs": "^0.8.5"
+    "node-fetch": "2.7.0"
   },
   "devDependencies": {
-    "@types/node-fetch": "^2.6.11",
     "electron": "^31.2.0",
-    "electron-builder": "^25.0.5"
+    "electron-builder": "^25.0.5",
+    "electron-packager": "^17.1.2"
   },
   "pkg": {
     "targets": [
